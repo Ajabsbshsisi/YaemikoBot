@@ -1,17 +1,22 @@
 import fetch from 'node-fetch'
-let handler = async(m, { conn, text }) => {
-  if (!text) throw `❗Masukan Judul Animenya!!`
-  try {
-  let res = await fetch(`https://api.xyroinee.xyz/api/anime/mal-anime?q=${text}&apikey=${global.xyro}`)
-  let json = await res.json()
-  res = json.data.map((v) => `*Title:* ${v.title}\n*Type:* ${v.type}\n*Score:* ${v.score}\n*Episode:* ${v.episode}\n*Thumbnail:* ${v.thumbnail}\n*Link:* ${v.url}`).join`\n\n°°°°°°°°°°°°°°°°°°°°°°°°°°°°°\n\n`
-  conn.sendFile(m.chat, json.data[0].thumbnail, 'anunya.jpg', res, m)
-  } catch (e) {
-m.reply(`❗Terjadi Kesalahan, Judul Anime Yang Kamu Cari Tidak Di Temukan`)
+
+var handler = async (m, { conn, text }) => {
+if (!text) throw `*Masukan Judul Anime Yang Ingin Kamu Cari !*`
+let res = await fetch('https://api.jikan.moe/v4/anime?q=' + text)
+if (!res.ok) throw 'Tidak Ditemukan'
+let json = await res.json()
+let { title, status, episodes, favorites, url } = json.data[0]
+let animeingfo = `
+• Nama: ${title}
+• Status: ${status}
+• Episode: ${episodes}
+• Favorit: ${favorites}
+• Url: ${url}
+`
+conn.sendFile(m.chat, json.data[0].images.jpg.image_url, 'animek.jpg', animeingfo, m)
 }
-}
-handler.help = ['animeinfo']
+handler.help = ['anime']
 handler.tags = ['anime']
-handler.command = /^(animeinfo)$/i
-handler.limit = true
+handler.command = /^(anime)$/i
+
 export default handler
