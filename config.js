@@ -10,7 +10,10 @@ const readMore = more.repeat(4001)
 
 // Owner
 global.owner = [
-['6289518562932', 'RepanAja', true] //Ganti aja
+['6287756593163', 'RenAja', true], //Ganti aja
+['6289518562932', 'RepanAja', true],
+['6285655730841', 'ArthaAja', true],
+['6283123952723', 'SyarifAja', true]
 ]
 global.mods = []
 global.prems = []
